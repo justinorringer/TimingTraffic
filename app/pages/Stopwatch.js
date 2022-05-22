@@ -9,6 +9,8 @@ function ButtonsRow({ children }) {
     return <View style={styles.buttonsRow}>{children}</View>;
 }
 
+const START = 5 - 1; // start time in seconds
+const LAP = 15;
 function Stopwatch() {
     const [start, setStart] = useState(0); // start time
 
@@ -23,15 +25,15 @@ function Stopwatch() {
     let interval; // interval object
 
     function StartTimer() {
-        const now = new Date().getTime();
-        setStart(now);
+        const now = moment();
+        setStart(now.subtract(START, "seconds"));
         setNow(now);
         setLaps([0]);
         setRunning(true);
     }
 
     function LapTimer() {
-        const now = new Date().getTime();
+        const now = moment();
 
         setStart(now);
         setNow(now);
@@ -43,7 +45,6 @@ function Stopwatch() {
 
     function StopTimer() {
         clearInterval(interval);
-        setRunning(false);
 
         let [firstLap, ...others] = laps;
         setLaps([firstLap + now - start, ...others]);
@@ -54,7 +55,7 @@ function Stopwatch() {
     }
 
     function ResumeTimer() {
-        const now = new Date().getTime();
+        const now = moment();
         setStart(now);
         setNow(now);
         setRunning(true);
@@ -65,6 +66,7 @@ function Stopwatch() {
         setStart(0);
         setNow(0);
         setTimer(0);
+        setRunning(false);
     }
 
     useEffect(() => {
@@ -90,7 +92,7 @@ function Stopwatch() {
                 interval={laps.reduce((total, curr) => total + curr, 0) + timer}
                 units
             />
-            {laps.length === 0 && (
+            {!running && (
                 <ButtonsRow>
                     <RoundButton
                         title="Lap"
@@ -122,7 +124,7 @@ function Stopwatch() {
                     />
                 </ButtonsRow>
             )}
-            {laps.length > 0 && start === 0 && (
+            {running && start === 0 && (
                 <ButtonsRow>
                     <RoundButton
                         title="Reset"
