@@ -1,0 +1,10 @@
+* {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 18px;
+    margin: 0;
+}
+
+App, #root{
+    height: 100%;
+    background-color: #323c39;
+}
