@@ -14,11 +14,6 @@ function Timer({ interval, style, units }) {
 }
 
 const styles = StyleSheet.create({
-    timer: {
-        color: "#fff",
-        fontSize: 70,
-        fontWeight: "200",
-    },
     timerContainer: {
         flexDirection: "column",
         alignItems: "center",

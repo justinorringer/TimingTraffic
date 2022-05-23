@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
-function RoundButton({ title, color, background, onPress, disabled }) {
+function RoundButton({ title, color, background, onPress, disabled, style }) {
     return (
         <TouchableOpacity
-            style={[styles.roundButton, { backgroundColor: background }]}
+            style={[styles.roundButton, style, { backgroundColor: background }]}
             onPress={() => !disabled && onPress?.()}
             activeOpacity={disabled ? 1.0 : 0.7}
         >

@@ -75,11 +75,11 @@ function Stopwatch() {
         setRunning(false);
         clearInterval(interval);
 
-        setStart(moment(0));
+        setStart(0);
         setNow(moment(0));
         setTimer(0);
 
-        setLaps([0]);
+        setLaps([]);
     }
 
     useEffect(() => {
@@ -109,54 +109,50 @@ function Stopwatch() {
                 interval={laps.reduce((total, curr) => total + curr, 0) + timer}
                 units
             />
-            {
-                <ButtonsRow>
-                    <RoundButton
-                        title="Lap"
-                        color="#fff"
-                        background="#151515"
-                        disabled
-                    />
-                    <RoundButton
-                        title="Start"
-                        color="#fff"
-                        background="#D2042D"
-                        onPress={StartTimer}
-                    />
-                </ButtonsRow>
-            }
-            {start > 0 && (
-                <ButtonsRow>
-                    <RoundButton
-                        title="Lap"
-                        color="#fff"
-                        background="#3D3D3D"
-                        onPress={LapTimer}
-                    />
-                    <RoundButton
-                        title="Stop"
-                        color="#fff"
-                        background="#D2042D"
-                        onPress={StopTimer}
-                    />
-                </ButtonsRow>
+            <View style={styles.input}>
+                <Text style={styles.inputText}>Start: </Text>
+                <Text style={styles.inputText}>{START}</Text>
+            </View>
+            <View style={styles.input}>
+                <Text style={styles.inputText}> Lap: </Text>
+                <Text style={styles.inputText}>{LAP}</Text>
+            </View>
+            {start === 0 && (
+                <RoundButton
+                    style={styles.button}
+                    title="Start"
+                    color="#fff"
+                    background="#D2042D"
+                    onPress={StartTimer}
+                />
             )}
-            {
-                <ButtonsRow>
+            {start > moment(0) && (
+                <RoundButton
+                    style={styles.button}
+                    title="Stop"
+                    color="#fff"
+                    background="#D2042D"
+                    onPress={StopTimer}
+                />
+            )}
+            {laps.length > 0 && !running && (
+                <View>
                     <RoundButton
-                        title="Reset"
-                        color="#fff"
-                        background="#3D3D3D"
-                        onPress={ResetTimer}
-                    />
-                    <RoundButton
+                        style={styles.button}
                         title="Resume"
                         color="#fff"
                         background="#D2042D"
                         onPress={ResumeTimer}
                     />
-                </ButtonsRow>
-            }
+                    <RoundButton
+                        style={styles.button}
+                        title="Reset"
+                        color="#fff"
+                        background="#3D3D3D"
+                        onPress={ResetTimer}
+                    />
+                </View>
+            )}
         </View>
     );
 }
@@ -174,25 +170,20 @@ const styles = StyleSheet.create({
         fontSize: 70,
         fontWeight: "200",
     },
-    buttonsRow: {
-        flexDirection: "row",
-        alignSelf: "stretch",
-        justifyContent: "space-between",
-        marginTop: 20,
+    bottomButton: {
+        justifyContent: "flex-end",
+    },
+    button: {
+        marginTop: "20%",
         marginBottom: 20,
     },
-    lapText: {
+    inputText: {
         color: "#fff",
-        fontSize: 16,
+        fontSize: 20,
     },
-    lapTimer: {
-        width: 25,
-    },
-    lap: {
+    input: {
         flexDirection: "row",
         justifyContent: "space-between",
-        borderColor: "#151515",
-        borderBottomWidth: 1,
         paddingVertical: 10,
         color: "#fff",
     },
