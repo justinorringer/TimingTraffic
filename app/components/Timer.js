@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import moment from "moment";
 
 function Timer({ interval, style, units }) {
-    const duration = Math.ceil(moment.duration(interval).asSeconds());
+    const duration = Math.floor(moment.duration(interval).asSeconds());
 
     return (
         <View style={styles.timerContainer}>

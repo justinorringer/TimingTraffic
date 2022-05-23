@@ -3,31 +3,35 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import moment from "moment";
 
-import { Timer, LapsTable, RoundButton } from "../components";
+import { Timer, RoundButton } from "../components";
 
 function ButtonsRow({ children }) {
     return <View style={styles.buttonsRow}>{children}</View>;
 }
 
-const START = 5 - 1; // start time in seconds
-const LAP = 15;
+const START = 5; // start time in seconds
+const LAP = 10; // lap time in seconds
+
 function Stopwatch() {
     const [start, setStart] = useState(0); // start time
 
     const [running, setRunning] = useState(false);
 
-    const [now, setNow] = useState(0); // current time
-
-    const [laps, setLaps] = useState([]); // dictionary of lap times; will have start and end fields
+    const [now, setNow] = useState(moment(0)); // current time
 
     const [timer, setTimer] = useState(0); // timer object
 
+    const [lap, setLap] = useState(moment(0));
+
+    const [laps, setLaps] = useState([]); // dictionary of lap times; will have start and end fields
+
     let interval; // interval object
+    let total = moment(0);
 
     function StartTimer() {
-        const now = moment();
-        setStart(now.subtract(START, "seconds"));
-        setNow(now);
+        setStart(moment().subtract(START, "seconds"));
+        setNow(moment());
+        setLap(moment().add(LAP - START, "seconds"));
         setLaps([0]);
         setRunning(true);
     }
@@ -37,42 +41,51 @@ function Stopwatch() {
 
         setStart(now);
         setNow(now);
+        setLap(moment().add(LAP, "seconds"));
 
-        let [firstLap, ...others] = laps;
-        setLaps([0, firstLap + now - start, ...others]);
+        setTimer(0);
+
+        setLaps([0]);
+
         // just to make sure its in sync
     }
 
     function StopTimer() {
+        setRunning(false);
         clearInterval(interval);
 
         let [firstLap, ...others] = laps;
         setLaps([firstLap + now - start, ...others]);
 
-        setTimer(0);
-        setStart(0);
-        setNow(0);
+        setTimer(moment(0));
+        setStart(moment(0));
+        setNow(moment(0));
     }
 
     function ResumeTimer() {
-        const now = moment();
-        setStart(now);
-        setNow(now);
         setRunning(true);
+        setStart(moment());
+        setNow(moment());
+
+        let temp = moment().add(LAP, "seconds").subtract(laps[0]);
+        setLap(temp);
     }
 
     function ResetTimer() {
-        setLaps([]);
-        setStart(0);
-        setNow(0);
-        setTimer(0);
         setRunning(false);
+        clearInterval(interval);
+
+        setStart(moment(0));
+        setNow(moment(0));
+        setTimer(0);
+
+        setLaps([0]);
     }
 
     useEffect(() => {
         if (running) {
             interval = setInterval(() => {
-                setNow(new Date().getTime());
+                setNow(moment());
             }, 100);
         }
     }, [start]);
@@ -82,6 +95,10 @@ function Stopwatch() {
             let interval = now - start;
 
             setTimer(interval);
+
+            if (now > lap) {
+                LapTimer();
+            }
         }
     }, [now]);
 
@@ -92,7 +109,7 @@ function Stopwatch() {
                 interval={laps.reduce((total, curr) => total + curr, 0) + timer}
                 units
             />
-            {!running && (
+            {
                 <ButtonsRow>
                     <RoundButton
                         title="Lap"
@@ -107,7 +124,7 @@ function Stopwatch() {
                         onPress={StartTimer}
                     />
                 </ButtonsRow>
-            )}
+            }
             {start > 0 && (
                 <ButtonsRow>
                     <RoundButton
@@ -124,7 +141,7 @@ function Stopwatch() {
                     />
                 </ButtonsRow>
             )}
-            {running && start === 0 && (
+            {
                 <ButtonsRow>
                     <RoundButton
                         title="Reset"
@@ -139,8 +156,7 @@ function Stopwatch() {
                         onPress={ResumeTimer}
                     />
                 </ButtonsRow>
-            )}
-            <LapsTable laps={laps} timer={timer} running={running} />
+            }
         </View>
     );
 }
@@ -149,19 +165,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "center",
         width: "60%",
         height: "60%",
-        paddingTop: "30%",
+        paddingTop: "40%",
     },
     timer: {
         color: "#fff",
         fontSize: 70,
         fontWeight: "200",
-    },
-    timerContainer: {
-        flexDirection: "column",
-        alignItems: "center",
     },
     buttonsRow: {
         flexDirection: "row",
@@ -187,12 +198,6 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         alignSelf: "stretch",
-    },
-    fastest: {
-        color: "#00FF00",
-    },
-    slowest: {
-        color: "#E83535",
     },
 });
 
