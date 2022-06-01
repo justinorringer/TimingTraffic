@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import moment from "moment";
 
 function Timer({ interval, style, units }) {
-    const duration = Math.ceil(moment.duration(interval).asSeconds());
+    const duration = Math.floor(moment.duration(interval).asSeconds());
 
     return (
         <View style={styles.timerContainer}>
@@ -14,11 +14,6 @@ function Timer({ interval, style, units }) {
 }
 
 const styles = StyleSheet.create({
-    timer: {
-        color: "#fff",
-        fontSize: 70,
-        fontWeight: "200",
-    },
     timerContainer: {
         flexDirection: "column",
         alignItems: "center",

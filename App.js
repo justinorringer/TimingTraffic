@@ -22,10 +22,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#323c39",
         alignItems: "center",
-        paddingTop: 50,
         paddingHorizontal: 40,
     },
     road: {
+        paddingTop: "5%",
         width: "90%",
         height: "90%",
         position: "absolute",
