@@ -3,8 +3,9 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import moment from "moment";
 
-import { Timer, RoundButton } from "../components";
+import { SafeAreaView } from "react-native-safe-area-context";
 
+import { Timer, RoundButton } from "../components";
 import Road from "../assets/Road";
 
 function ButtonsRow({ children }) {
@@ -105,7 +106,7 @@ function Stopwatch() {
     }, [now]);
 
     return (
-        <View style={styles.stopwatchContainer}>
+        <SafeAreaView style={styles.stopwatchContainer}>
             <View style={styles.container}>
                 <Timer
                     style={styles.timer}
@@ -162,7 +163,7 @@ function Stopwatch() {
             <View style={styles.road}>
                 <Road style={styles.road} />
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -171,26 +172,21 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#323c39",
         alignItems: "center",
-        paddingHorizontal: 40,
     },
     container: {
         flex: 1,
         alignItems: "center",
         width: "60%",
         height: "60%",
-        paddingTop: "40%",
+        paddingTop: "25%",
     },
     timer: {
         color: "#fff",
         fontSize: 70,
         fontWeight: "200",
     },
-    bottomButton: {
-        justifyContent: "flex-end",
-    },
     button: {
-        marginTop: "20%",
-        marginBottom: 20,
+        marginTop: "15%",
     },
     inputText: {
         color: "#fff",
@@ -206,9 +202,9 @@ const styles = StyleSheet.create({
         alignSelf: "stretch",
     },
     road: {
-        paddingTop: "5%",
+        paddingTop: "10%",
         width: "90%",
-        height: "90%",
+        height: "100%",
         position: "absolute",
         justifyContent: "center",
         alignItems: "center",
