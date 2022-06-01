@@ -4,16 +4,20 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 
 import Road from "./app/assets/Road";
 
+import { NavigationContainer } from "@react-navigation/native";
+
 import Stopwatch from "./app/pages/Stopwatch";
 
 export default function App() {
     return (
-        <View style={styles.container}>
-            <Stopwatch />
-            <View style={styles.road}>
-                <Road style={styles.road} />
+        <NavigationContainer>
+            <View style={styles.container}>
+                <Stopwatch />
+                <View style={styles.road}>
+                    <Road style={styles.road} />
+                </View>
             </View>
-        </View>
+        </NavigationContainer>
     );
 }
 
