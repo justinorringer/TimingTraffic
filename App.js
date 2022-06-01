@@ -7,21 +7,31 @@ import Road from "./app/assets/Road";
 import { NavigationContainer } from "@react-navigation/native";
 
 import Stopwatch from "./app/pages/Stopwatch";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Stack = createNativeStackNavigator();
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
+const Tab = createMaterialTopTabNavigator();
+
+function Notes() {
+    return (
+        <View>
+            <Text>Notes</Text>
+        </View>
+    );
+}
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator
+            <Tab.Navigator
                 initialRouteName="Stopwatch"
                 screenOptions={{
                     headerShown: false,
                 }}
+                tabBarPosition="bottom"
             >
-                <Stack.Screen name="Stopwatch" component={Stopwatch} />
-            </Stack.Navigator>
+                <Tab.Screen name="Stopwatch" component={Stopwatch} />
+                <Tab.Screen name="Notes" component={Notes} />
+            </Tab.Navigator>
         </NavigationContainer>
     );
 }
