@@ -14,7 +14,12 @@ const Stack = createNativeStackNavigator();
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator
+                initialRouteName="Stopwatch"
+                screenOptions={{
+                    headerShown: false,
+                }}
+            >
                 <Stack.Screen name="Stopwatch" component={Stopwatch} />
             </Stack.Navigator>
         </NavigationContainer>
