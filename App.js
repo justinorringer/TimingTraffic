@@ -7,34 +7,16 @@ import Road from "./app/assets/Road";
 import { NavigationContainer } from "@react-navigation/native";
 
 import Stopwatch from "./app/pages/Stopwatch";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
         <NavigationContainer>
-            <View style={styles.container}>
-                <Stopwatch />
-                <View style={styles.road}>
-                    <Road style={styles.road} />
-                </View>
-            </View>
+            <Stack.Navigator>
+                <Stack.Screen name="Stopwatch" component={Stopwatch} />
+            </Stack.Navigator>
         </NavigationContainer>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#323c39",
-        alignItems: "center",
-        paddingHorizontal: 40,
-    },
-    road: {
-        paddingTop: "5%",
-        width: "90%",
-        height: "90%",
-        position: "absolute",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: -1,
-    },
-});

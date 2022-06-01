@@ -5,6 +5,8 @@ import moment from "moment";
 
 import { Timer, RoundButton } from "../components";
 
+import Road from "../assets/Road";
+
 function ButtonsRow({ children }) {
     return <View style={styles.buttonsRow}>{children}</View>;
 }
@@ -103,61 +105,74 @@ function Stopwatch() {
     }, [now]);
 
     return (
-        <View style={styles.container}>
-            <Timer
-                style={styles.timer}
-                interval={laps.reduce((total, curr) => total + curr, 0) + timer}
-                units
-            />
-            <View style={styles.input}>
-                <Text style={styles.inputText}>Start: </Text>
-                <Text style={styles.inputText}>{START}</Text>
-            </View>
-            <View style={styles.input}>
-                <Text style={styles.inputText}> Lap: </Text>
-                <Text style={styles.inputText}>{LAP}</Text>
-            </View>
-            {start === 0 && (
-                <RoundButton
-                    style={styles.button}
-                    title="Start"
-                    color="#fff"
-                    background="#D2042D"
-                    onPress={StartTimer}
+        <View style={styles.stopwatchContainer}>
+            <View style={styles.container}>
+                <Timer
+                    style={styles.timer}
+                    interval={
+                        laps.reduce((total, curr) => total + curr, 0) + timer
+                    }
+                    units
                 />
-            )}
-            {start > moment(0) && (
-                <RoundButton
-                    style={styles.button}
-                    title="Stop"
-                    color="#fff"
-                    background="#D2042D"
-                    onPress={StopTimer}
-                />
-            )}
-            {laps.length > 0 && !running && (
-                <View>
+                <View style={styles.input}>
+                    <Text style={styles.inputText}>Start: </Text>
+                    <Text style={styles.inputText}>{START}</Text>
+                </View>
+                <View style={styles.input}>
+                    <Text style={styles.inputText}> Lap: </Text>
+                    <Text style={styles.inputText}>{LAP}</Text>
+                </View>
+                {start === 0 && (
                     <RoundButton
                         style={styles.button}
-                        title="Resume"
+                        title="Start"
                         color="#fff"
                         background="#D2042D"
-                        onPress={ResumeTimer}
+                        onPress={StartTimer}
                     />
+                )}
+                {start > moment(0) && (
                     <RoundButton
                         style={styles.button}
-                        title="Reset"
+                        title="Stop"
                         color="#fff"
-                        background="#3D3D3D"
-                        onPress={ResetTimer}
+                        background="#D2042D"
+                        onPress={StopTimer}
                     />
-                </View>
-            )}
+                )}
+                {laps.length > 0 && !running && (
+                    <View>
+                        <RoundButton
+                            style={styles.button}
+                            title="Resume"
+                            color="#fff"
+                            background="#D2042D"
+                            onPress={ResumeTimer}
+                        />
+                        <RoundButton
+                            style={styles.button}
+                            title="Reset"
+                            color="#fff"
+                            background="#3D3D3D"
+                            onPress={ResetTimer}
+                        />
+                    </View>
+                )}
+            </View>
+            <View style={styles.road}>
+                <Road style={styles.road} />
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    stopwatchContainer: {
+        flex: 1,
+        backgroundColor: "#323c39",
+        alignItems: "center",
+        paddingHorizontal: 40,
+    },
     container: {
         flex: 1,
         alignItems: "center",
@@ -189,6 +204,15 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         alignSelf: "stretch",
+    },
+    road: {
+        paddingTop: "5%",
+        width: "90%",
+        height: "90%",
+        position: "absolute",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: -1,
     },
 });
 
