@@ -6,16 +6,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Stopwatch from "./app/pages/Stopwatch";
+import Notes from "./app/pages/Notes";
 
 const Tab = createMaterialTopTabNavigator();
 
-function Notes() {
-    return (
-        <View>
-            <Text>Notes</Text>
-        </View>
-    );
-}
 export default function App() {
     return (
         <SafeAreaProvider>
@@ -31,6 +25,7 @@ export default function App() {
                     <Tab.Screen name="Notes" component={Notes} />
                 </Tab.Navigator>
             </NavigationContainer>
+            <StatusBar style="light" />
         </SafeAreaProvider>
     );
 }
