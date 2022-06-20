@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import moment from "moment";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { Timer, RoundButton } from "../components";
+import { Timer, RoundButton, TextButton } from "../components";
 import Road from "../assets/Road";
-
-function ButtonsRow({ children }) {
-    return <View style={styles.buttonsRow}>{children}</View>;
-}
 
 const START = 5; // start time in seconds
 const LAP = 10; // lap time in seconds
@@ -142,24 +137,20 @@ function Stopwatch() {
                     />
                 )}
                 {laps.length > 0 && !running && (
-                    <View>
-                        <RoundButton
-                            style={styles.button}
-                            title="Resume"
-                            color="#fff"
-                            background="#D2042D"
-                            onPress={ResumeTimer}
-                        />
-                        <RoundButton
-                            style={styles.button}
-                            title="Reset"
-                            color="#fff"
-                            background="#3D3D3D"
-                            onPress={ResetTimer}
-                        />
-                    </View>
+                    <RoundButton
+                        style={styles.button}
+                        title="Resume"
+                        color="#fff"
+                        background="#D2042D"
+                        onPress={ResumeTimer}
+                    />
                 )}
             </View>
+            {laps.length > 0 && (
+                <View style={styles.resetContainer}>
+                    <TextButton onPress={ResetTimer} title="Reset" />
+                </View>
+            )}
             <View style={styles.road}>
                 <Road style={styles.road} />
             </View>
@@ -173,12 +164,17 @@ const styles = StyleSheet.create({
         backgroundColor: "#323c39",
         alignItems: "center",
     },
+    resetContainer: {
+        // container for reset button; counteracts the button margins
+        marginTop: "calc(-.18 * 100vh)",
+        marginBottom: "calc(.18 * 100vh - 19px)", // -19px for the text size
+    },
     container: {
         flex: 1,
         alignItems: "center",
         width: "60%",
         height: "60%",
-        paddingTop: "25%",
+        paddingTop: "calc(.15 * 100vh)",
     },
     timer: {
         color: "#fff",
@@ -186,7 +182,8 @@ const styles = StyleSheet.create({
         fontWeight: "200",
     },
     button: {
-        marginTop: "15%",
+        marginTop: "auto",
+        marginBottom: "calc(.20 * 100vh)",
     },
     inputText: {
         color: "#fff",
@@ -202,9 +199,9 @@ const styles = StyleSheet.create({
         alignSelf: "stretch",
     },
     road: {
-        paddingTop: "10%",
+        paddingTop: "calc(.05 * 100vh)",
         width: "90%",
-        height: "100%",
+        height: "95%",
         position: "absolute",
         justifyContent: "center",
         alignItems: "center",
