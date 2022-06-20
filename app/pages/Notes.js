@@ -30,8 +30,7 @@ export default function Notes() {
                     onChangeText={setNote}
                     style={[styles.textInput]}
                     multiline
-                    autoFocus
-                    selectionColor="#000"
+                    selectionColor="#00f"
                 />
             </View>
         </SafeAreaView>
