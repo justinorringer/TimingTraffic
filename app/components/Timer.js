@@ -8,7 +8,7 @@ function Timer({ interval, style, units }) {
     return (
         <View style={styles.timerContainer}>
             <Text style={style}>{duration}</Text>
-            {units && <Text style={style}>sec</Text>}
+            {units && <Text style={[style, styles.units]}>sec</Text>}
         </View>
     );
 }
@@ -17,6 +17,11 @@ const styles = StyleSheet.create({
     timerContainer: {
         flexDirection: "column",
         alignItems: "center",
+        marginBottom: "20px",
+    },
+    units: {
+        fontSize: 50,
+        marginTop: "-10px",
     },
 });
 
