@@ -1,8 +1,8 @@
 import { View, TextInput, StyleSheet, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
-
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Platform } from "react-native";
 
 export default function Notes() {
     const [note, setNote] = useState("");
@@ -62,9 +62,10 @@ const styles = StyleSheet.create({
         outlineColor: "#523009",
         outlineStyle: "solid",
         outlineWidth: 4,
+        height: "100%",
     },
     textInput: {
-        color: "#0000",
+        color: "#000",
         fontSize: 22,
         fontWeight: "200",
         zIndex: 1,
@@ -72,5 +73,6 @@ const styles = StyleSheet.create({
         width: "100%",
         position: "absolute",
         paddingVertical: 0,
+        height: "100%",
     },
 });
