@@ -28,11 +28,8 @@ export default function Notes() {
                 <TextInput
                     value={note}
                     onChangeText={setNote}
-                    style={[
-                        styles.textInput,
-                        { height: Platform.OS == "android" ? 40 : 20 },
-                    ]}
-                    multiline={true}
+                    style={[styles.textInput]}
+                    multiline
                     autoFocus
                     selectionColor="#000"
                 />
@@ -46,19 +43,19 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#323c39",
         padding: 30,
-        paddingTop: "10%",
+        paddingTop: "calc(.1 * 100vh)",
         width: "100%",
     },
     header: {
         fontSize: 30,
         fontWeight: "bold",
         color: "#fff",
+        marginBottom: 20,
     },
     textContainer: {
         flex: 1,
         backgroundColor: "#fff",
         color: "#000000",
-        marginTop: "5%",
         outlineColor: "#523009",
         outlineStyle: "solid",
         outlineWidth: 4,
@@ -69,10 +66,10 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: "200",
         zIndex: 1,
-        lineHeight: 22,
+        lineHeight: 26,
         width: "100%",
         position: "absolute",
-        paddingVertical: 0,
         height: "100%",
+        padding: "20px",
     },
 });
