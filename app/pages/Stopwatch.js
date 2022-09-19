@@ -4,14 +4,14 @@ import moment from "moment";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { Timer, RoundButton, TextButton } from "../components";
+import { Timer, ScrollingInput, RoundButton, TextButton } from "../components";
 import Road from "../assets/Road";
 
 const START = 5; // start time in seconds
 const LAP = 10; // lap time in seconds
 
 function Stopwatch() {
-    const [start, setStart] = useState(0); // start time
+    const [start, setStart] = useState(moment(0)); // start time
 
     const [running, setRunning] = useState(false);
 
@@ -26,10 +26,20 @@ function Stopwatch() {
     let interval; // interval object
     let total = moment(0);
 
+    // callback to set the start time (in seconds)
+    function SetStart(start) {
+        setStart(moment(start, "seconds"));
+    }
+
+    // callback to set the lap time (in seconds)
+    function SetLap(lap) {
+        setStart(moment(lap, "seconds"));
+    }
+
     function StartTimer() {
-        setStart(moment().subtract(START, "seconds"));
+        setStart(moment().subtract(start, "seconds"));
         setNow(moment());
-        setLap(moment().add(LAP - START, "seconds"));
+        setLap(moment().add(lap - start, "seconds"));
         setLaps([0]);
         setRunning(true);
     }
@@ -39,7 +49,7 @@ function Stopwatch() {
 
         setStart(now);
         setNow(now);
-        setLap(moment().add(LAP, "seconds"));
+        setLap(moment().add(lap, "seconds"));
 
         setTimer(0);
 
@@ -154,6 +164,7 @@ function Stopwatch() {
             <View style={styles.road}>
                 <Road style={styles.road} />
             </View>
+            <ScrollingInput title="Start Time" />
         </SafeAreaView>
     );
 }

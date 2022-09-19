@@ -7,6 +7,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Stopwatch from "./app/pages/Stopwatch";
 import Notes from "./app/pages/Notes";
 
+import { ModalPortal } from "react-native-modals";
+import { Provider } from "react-redux";
+
 const Tab = createMaterialTopTabNavigator();
 
 export default function App() {
@@ -25,6 +28,7 @@ export default function App() {
                 </Tab.Navigator>
             </NavigationContainer>
             <StatusBar style="light" />
+            <ModalPortal />
         </SafeAreaProvider>
     );
 }
